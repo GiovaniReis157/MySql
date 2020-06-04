@@ -1,0 +1,86 @@
+create database biblioteca;
+use biblioteca;
+
+CREATE TABLE livro(
+codlivro int PRIMARY KEY auto_increment,
+editora varchar(100),
+titulo varchar(60),
+autor varchar(60),
+genero(60)
+);
+
+CREATE TABLE bibliotecario (
+codfunc int PRIMARY KEY auto_increment,
+telefone varchar(20),
+email varchar(100) unique,
+nome varchar(100),
+cpf varchar(100) unique,
+rg varchar(100) unique,
+datanascimento date,
+logradouro varchar(100),
+num int,
+complemento varchar(100),
+bairro varchar(100),
+cidade varchar(100),
+uf char(2),
+cep varchar(100)
+);
+
+CREATE TABLE cliente(
+ra int PRIMARY KEY auto_increment,
+datanascimento date,
+nome varchar(100),
+telefone varchar(100),
+email varchar(100),
+turma varchar(150)
+);
+
+CREATE TABLE emprestimo_devolucao(
+codempr int PRIMARY KEY auto_increment,
+data_devolucao date,
+data_emprestimo date,
+ra int,
+codfunc int,
+codlivro int,
+FOREIGN KEY(ra) REFERENCES cliente (ra),
+FOREIGN KEY(codfunc) REFERENCES bibliotecario (codfunc),
+FOREIGN KEY(codlivro) REFERENCES livro (codlivro)
+);
+
+INSERT INTO bibliotecario (nome, email, datanascimento, cpf, telefone, cidade, uf) VALUES
+('Rogério Skylab','skylab@gmail.com','1987-12-10','678.676.354-54','3545-9876','São Caetano','SP'),
+('Murilo Couto','coutin@gmail.com','1995-08-10','567.356.878-98','3423-8765','Santo André','SP'),
+('Felipe Neto','notolandia@gmail.com','2000-06-05','678.135.986-08','3456-7890','Mauá','SP');
+
+INSERT INTO livro(titulo, autor, editora, genero) VALUES
+('Diário de um Banana','Jeff Kiney','V&R','Aventura'),
+('20 mil Légua Submarinas','Júlio Verne','Ática','Aventura'),
+('Viagem ao Centro da Terra','Júlio Verne','Ática','Aventura'),
+('Menino Maluquinho','Ziraldo','Melhoramento','Infantil'),
+('Sucesso de Cinema','H.I Larry','Editora Fundamento','Infantil'),
+('Casa do Terror','H.I Larry','Editora Fundamento','Infantil'),
+('Meninos Sem Pátria','Luiz Puntel','Ática','Aventura'),
+('A Ilha Perdida','Maria José','Ática','Suspense'),
+('O Poder da Esperança','Michael Borges','CPB','Autoajuda'),
+('Guerra Civil','Stuart Moore','novo século','Ação');
+
+INSERT INTO cliente (nome, datanascimento, telefone, turma) VALUES
+('Giovani dos Reis Gil','2004-12-10','3567-8765','2c'),
+('Gabriel Feitosa','2003-06-04','3562-5421','2c'),
+('Gabriel Fernando','2004-09-07','3908-0076','2c'),
+('Tiru Lipa','1994-11-26','3338-8883','1c'),
+('Whindersson Nunes','1990-04-17','3210-0123','3f');
+
+INSERT INTO emprestimo_devolucao (codfunc, codlivro, ra, data_emprestimo,data_devolucao) VALUES
+(1,2,2,'2020-05-29','2020-06-10'),
+(1,4,2,'2020-05-29','2020-06-10'),
+(3,7,5,'2019-06-10','2020-06-17'),
+(2,8,4,'2020-02-14','2020-02-21'),
+(1,2,3,'2020-01-01','2020-01-07'),
+(2,2,2,'2020-06-21','2020-06-28'),
+(1,2,2,'2020-02-04','2020-02-11'),
+(3,2,1,'2020-05-25','2020-06-02'),
+(1,2,3,'2020-03-10','2020-03-17'),
+(2,2,1,'2020-04-27','2020-05-04');
+
+
